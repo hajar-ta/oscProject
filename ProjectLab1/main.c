@@ -10,6 +10,7 @@ int main(){
 
     FILE * map = fopen("room_sensor.map", "r");
     FILE * data = fopen("sensor_data", "rb");
+    ERROR_HANDLER(map == NULL || data == NULL, "Failed to open input files");
 
     if(map == NULL) return -1;
     if(data == NULL) return -1;
@@ -17,6 +18,7 @@ int main(){
     datamgr_parse_sensor_files(map, data);
 
     datamgr_free();
+
 
     fclose(map);
     fclose(data);

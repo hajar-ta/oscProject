@@ -5,6 +5,11 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+#define SET_MIN_TEMP 10
+#define SET_MAX_TEMP 30
+#define RUN_AVG_LENGTH 5
+
+
 #include <stdint.h>
 #include <time.h>
 
