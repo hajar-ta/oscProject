@@ -48,7 +48,7 @@ int element_compare(void *x, void *y) {
 void datamgr_parse_sensor_files(FILE *fp_sensor_map, FILE *fp_sensor_data) {
     sensor_data_list = dpl_create(element_copy, element_free, element_compare);
     uint16_t room_id,  sensor_id ;
-    while (fscanf(fp_sensor_map, "%hu" "%hu" , &room_id, &sensor_id) ==2)
+    while (fscanf(fp_sensor_map, "%hu %hu" , &room_id, &sensor_id) ==2)
     {
         sensor_data_element_t *new_sensor = malloc(sizeof(sensor_data_element_t));
         ERROR_HANDLER(new_sensor == NULL, "memory allocation failed");
@@ -93,5 +93,10 @@ void datamgr_parse_sensor_files(FILE *fp_sensor_map, FILE *fp_sensor_data) {
         }
     }
 
-    //fread used because it's a binary file scanf only works on formatted files( elements seperated by spaces or newlines) reading whole structure at once would work if the struct layout exactly matches the binary file so reading field by field is safer
+    //free used because it's a binary file scanf only works on formatted files( elements seperated by spaces or newlines) reading whole structure at once would work if the struct layout exactly matches the binary file so reading field by field is safer
 }
+
+void datamgr_free() {
+  dpl_free(&sensor_data_list, true);
+  sensor_data_list = NULL;
+  }
