@@ -20,6 +20,12 @@ int main(){
     return -1;}
 
     datamgr_parse_sensor_files(map, data);
+    
+    //test datamgr_get¨room_id
+    
+    sensor_id_t test_id = 15; 
+    uint16_t room = datamgr_get_room_id(test_id);
+    printf("Sensor %u belongs to room %u\n", test_id, room);
 
     datamgr_free();
     fclose(map);
