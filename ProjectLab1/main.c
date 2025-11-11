@@ -27,6 +27,16 @@ int main(){
     uint16_t room = datamgr_get_room_id(test_id);
     printf("Sensor %u belongs to room %u\n", test_id, room);
 
+    sensor_value_t avg = datamgr_get_avg(test_id);
+    printf("Average temperature for sensor %u: %.2f°C\n", test_id, avg);
+    printf("Checking total number of sensors:\n");
+    int total = datamgr_get_total_sensors();
+    printf("Total sensors recorded: %d\n", total);
+
+    printf("Checking last modified timestamp:\n");
+    time_t last = datamgr_get_last_modified(test_id);
+    printf("Sensor %u last updated at %ld (Unix time)\n", test_id, (long)last);
+
     datamgr_free();
     fclose(map);
     fclose(data);

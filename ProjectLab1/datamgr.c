@@ -110,6 +110,38 @@ uint16_t datamgr_get_room_id(sensor_id_t sensor_id) {
   
   sensor_data_element_t *sensor = dpl_get_element_at_index(sensor_data_list, index);
   return sensor ->room_id;
-
-
 }
+
+sensor_value_t datamgr_get_avg(sensor_id_t sensor_id) {
+  sensor_data_element_t temp;
+  
+  temp.id = sensor_id;
+  int index = dpl_get_index_of_element( sensor_data_list, &temp);
+  ERROR_HANDLER(index ==-1, "Invalid sensor ID");
+  sensor_data_element_t *sensor = dpl_get_element_at_index(sensor_data_list, index);
+  
+  if (sensor-> num_readings < RUN_AVG_LENGTH) {
+      return 0;} 
+   
+  double sum = 0;
+  for (int i = 0; i< RUN_AVG_LENGTH; i++) {
+    sum += sensor->temperature_values[i];
+    }
+    
+  return sum/RUN_AVG_LENGTH;
+}
+
+time_t datamgr_get_last_modified(sensor_id_t sensor_id){
+  sensor_data_element_t temp;
+  
+  temp.id = sensor_id;
+  int index = dpl_get_index_of_element( sensor_data_list, &temp);
+  ERROR_HANDLER(index ==-1, "Invalid sensor ID");
+  sensor_data_element_t *sensor = dpl_get_element_at_index(sensor_data_list, index);
+  
+  return sensor->last_modified;
+}
+
+int datamgr_get_total_sensors() {
+  return dpl_size(sensor_data_list);
+  }
